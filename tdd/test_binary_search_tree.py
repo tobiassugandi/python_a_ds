@@ -21,8 +21,14 @@ class TestBinarySearchTree(unittest.TestCase):
         value = bst.get(10)
         self.assertEqual(value, 'value10')
 
-
-
+    def test_insert_multiple_nodes(self):
+        bst = BinarySearchTree()
+        bst.put(10, "value10")
+        bst.put(5, "value5")
+        bst.put(3, "value3")
+        self.assertEqual(len(bst), 3)
+        self.assertEqual(bst.get(5), "value5")
+        self.assertEqual(bst.get(3), "value3")
 
 if __name__ == '__main__':
     unittest.main()

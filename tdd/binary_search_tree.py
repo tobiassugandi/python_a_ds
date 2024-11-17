@@ -16,17 +16,32 @@ class BinarySearchTree:
 
     def put(self, key, value):
         if self.root:
-            pass
+            self._put(key, value, self.root)
         else:
             self.root = TreeNode(key, value)
         self.size += 1
 
-    def get(self, key):
-        if self.root:
-            if self.root.key == key:
-                return self.root.value
+    def _put(self, key, value, current_node):
+        if key < current_node.key:
+            if current_node.left_child:
+                self._put(key, value, current_node.left_child)
             else:
-                return None
-                # todo
+                current_node.left_child = TreeNode(key, value)
         else:
+            if current_node.right_child:
+               self._put(key, value, current_node.right_child)
+            else:
+                current_node.right_child = TreeNode(key, value)
+
+    def get(self, key):
+        return self._get(key, self.root)
+
+    def _get(self, key, current_node):
+        if not current_node:
             return None
+        elif key == current_node.key:
+            return current_node.value
+        elif key < current_node.key:
+            return self._get(key, current_node.left_child)
+        else:
+            return self._get(key, current_node.right_child)
