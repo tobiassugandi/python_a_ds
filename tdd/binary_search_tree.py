@@ -21,6 +21,15 @@ class TreeNode:
     def has_one_child(self):
         return not self.is_leaf() and not self.has_two_children()
 
+    def __iter__(self):
+        if self.left_child:
+            for el in self.left_child:
+                yield el
+        yield self.key
+        if self.right_child:
+            for el in self.right_child:
+                yield el
+
 
 class BinarySearchTree:
     def __init__(self):
@@ -130,16 +139,19 @@ class BinarySearchTree:
             print(f"key {key} not found, cannot be deleted")
             pass
 
+    # def __iter__(self):
+    #     keys = []
+    #     stack = []
+    #     current = self.root
+    #     while stack or current:
+    #         if current:
+    #             stack.append(current)
+    #             current = current.left_child
+    #         else:
+    #             current = stack.pop()
+    #             keys.append(current.key)
+    #             current = current.right_child
+    #     return iter(keys)
+
     def __iter__(self):
-        keys = []
-        stack = []
-        current = self.root
-        while stack or current:
-            if current:
-                stack.append(current)
-                current = current.left_child
-            else:
-                current = stack.pop()
-                keys.append(current.key)
-                current = current.right_child
-        return iter(keys)
+        return self.root.__iter__() if self.root else iter([])
