@@ -15,9 +15,11 @@ class TreeNode:
     def is_right_child(self):
         return self.parent and self == self.parent.right_child
 
-    def has_one_child(self):
-        return self.left_child or self.right_child
+    def has_two_children(self):
+        return self.left_child is not None and self.right_child is not None
 
+    def has_one_child(self):
+        return not self.is_leaf() and not self.has_two_children()
 
 
 class BinarySearchTree:
@@ -83,9 +85,21 @@ class BinarySearchTree:
                     self.root = None
             elif node.has_one_child():
                 if node.is_right_child():
-                    pass
-                else:
-                    pass
+                    if node.right_child:
+                        node.parent.right_child = node.right_child
+                        node.right_child.parent = node.parent
+                    else: # node has left child
+                        node.parent.right_child = node.left_child
+                        node.left_child.parent = node.parent
+                elif node.is_left_child():
+                    if node.right_child:
+                        node.parent.left_child = node.right_child
+                        node.right_child.parent = node.parent
+                    else: # node has left child
+                        node.parent.left_child = node.left_child
+                        node.left_child.parent = node.parent
+                else: # root node w one child
+                    self.root = node.right_child if node.right_child else node.left_child
             self.size -= 1
         else: # nothing to delete
             print(f"key {key} not found, cannot be deleted")

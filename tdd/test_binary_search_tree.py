@@ -65,11 +65,18 @@ class TestBinarySearchTree(unittest.TestCase):
         bst.put(10, "value10")
         bst.put(5, "value5")
         bst.put(3, "value3")
+        # delete a non-root node with a child
         bst.delete(5)
         self.assertIsNone(bst.get_node(5))
         self.assertEqual(len(bst), 2)
         self.assertTrue(10 in bst and 3 in bst)
         self.assertTrue(bst.get_node(10) == bst.get_node(3).parent)
+        # delete a root node with a child
+        bst.delete(10)
+        self.assertEqual(bst.get_node(3), bst.root)
+
+
+
 
 
 if __name__ == '__main__':
