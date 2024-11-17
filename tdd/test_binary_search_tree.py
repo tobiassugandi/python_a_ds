@@ -29,6 +29,7 @@ class TestBinarySearchTree(unittest.TestCase):
         self.assertEqual(len(bst), 3)
         self.assertEqual(bst.get(5), "value5")
         self.assertEqual(bst.get(3), "value3")
+        self.assertEqual(bst.get_node(10), bst.get_node(5).parent)
 
     def test_get_nonexistent_key(self):
         bst = BinarySearchTree()
@@ -44,6 +45,32 @@ class TestBinarySearchTree(unittest.TestCase):
         self.assertTrue(10 in bst)
         self.assertTrue(5 in bst)
         self.assertTrue(3 in bst)
+
+    def test_delete_leaf(self):
+        bst = BinarySearchTree()
+        bst.put(10, "value10")
+        bst.put(5, "value5")
+        bst.delete(5)
+        self.assertIsNone(bst.root.left_child)
+        self.assertEqual(len(bst), 1)
+        self.assertFalse(5 in bst)
+        self.assertTrue(10 in bst)
+        bst.delete(10)
+        self.assertIsNone(bst.root)
+        self.assertFalse(10 in bst)
+
+
+    def test_delete_node_w_one_child(self):
+        bst = BinarySearchTree()
+        bst.put(10, "value10")
+        bst.put(5, "value5")
+        bst.put(3, "value3")
+        bst.delete(5)
+        self.assertIsNone(bst.get_node(5))
+        self.assertEqual(len(bst), 2)
+        self.assertTrue(10 in bst and 3 in bst)
+        self.assertTrue(bst.get_node(10) == bst.get_node(3).parent)
+
 
 if __name__ == '__main__':
     unittest.main()
