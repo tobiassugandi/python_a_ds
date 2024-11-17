@@ -75,8 +75,36 @@ class TestBinarySearchTree(unittest.TestCase):
         bst.delete(10)
         self.assertEqual(bst.get_node(3), bst.root)
 
-
-
+    def test_delete_node_w_two_child(self):
+        bst = BinarySearchTree()
+        bst.put(10, "value10")
+        bst.put(5, "value5")
+        bst.put(3, "value3")
+        bst.put(7, "value7")
+        bst.delete(5)
+        self.assertEqual(bst.get_node(10).left_child, bst.get_node(7))
+        self.assertEqual(bst.get_node(3).parent, bst.get_node(7))
+        self.assertEqual(bst.get_node(7).parent, bst.get_node(10))
+        bst = BinarySearchTree()
+        bst.put(10, "value10")
+        bst.put(5, "value5")
+        bst.put(3, "value3")
+        bst.put(7, "value7")
+        bst.put(6, "value6")
+        bst.delete(5)
+        self.assertEqual(bst.get_node(10).left_child, bst.get_node(6))
+        self.assertEqual(bst.get_node(3).parent, bst.get_node(6))
+        self.assertEqual(bst.get_node(6).parent, bst.get_node(10))
+        bst = BinarySearchTree()
+        bst.put(10, "value10")
+        bst.put(5, "value5")
+        bst.put(3, "value3")
+        bst.put(6, "value6")
+        bst.put(7, "value7")
+        bst.delete(5)
+        self.assertEqual(bst.get_node(10).left_child, bst.get_node(6))
+        self.assertEqual(bst.get_node(3).parent, bst.get_node(6))
+        self.assertEqual(bst.get_node(6).parent, bst.get_node(10))
 
 
 if __name__ == '__main__':

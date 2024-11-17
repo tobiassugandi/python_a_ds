@@ -100,6 +100,29 @@ class BinarySearchTree:
                         node.left_child.parent = node.parent
                 else: # root node w one child
                     self.root = node.right_child if node.right_child else node.left_child
+            else: # node has 2 children
+                # find successor
+                successor = node.right_child
+                while successor.left_child:
+                    successor = successor.left_child
+                # remove parent-successor and successor-child relation, this successor must either be a leaf or only has 1 child
+                self.delete(successor.key)
+
+                # back to deleting current node
+                # rearrange relation to parent
+                if node.is_left_child():
+                    node.parent.left_child = successor
+                if node.is_right_child():
+                    node.parent.right_child = successor
+                successor.parent = node.parent
+                # rearrange relation with right and left children
+                successor.left_child = node.left_child
+                node.left_child.parent = successor
+                if node.right_child:
+                    successor.right_child = node.right_child
+                    node.right_child.parent = successor
+                else:
+                    successor.right_child = None
             self.size -= 1
         else: # nothing to delete
             print(f"key {key} not found, cannot be deleted")
