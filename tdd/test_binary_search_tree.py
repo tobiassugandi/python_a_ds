@@ -15,6 +15,11 @@ class TestBinarySearchTree(unittest.TestCase):
         self.assertEqual(bst.root.value, 'value10')
         self.assertEqual(len(bst), 1)
 
+    def test_get_single_node(self):
+        bst = BinarySearchTree()
+        bst.put(10, 'value10')
+        value = bst.get(10)
+        self.assertEqual(value, 'value10')
 
 
 

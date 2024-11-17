@@ -20,3 +20,13 @@ class BinarySearchTree:
         else:
             self.root = TreeNode(key, value)
         self.size += 1
+
+    def get(self, key):
+        if self.root:
+            if self.root.key == key:
+                return self.root.value
+            else:
+                return None
+                # todo
+        else:
+            return None
