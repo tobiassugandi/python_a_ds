@@ -45,3 +45,6 @@ class BinarySearchTree:
             return self._get(key, current_node.left_child)
         else:
             return self._get(key, current_node.right_child)
+
+    def __contains__(self, key):
+        return self.get(key) is not None
