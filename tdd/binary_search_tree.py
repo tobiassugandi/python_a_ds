@@ -112,8 +112,10 @@ class BinarySearchTree:
                 # rearrange relation to parent
                 if node.is_left_child():
                     node.parent.left_child = successor
-                if node.is_right_child():
+                elif node.is_right_child():
                     node.parent.right_child = successor
+                else: # node has no parent ==> node is root
+                    self.root = successor
                 successor.parent = node.parent
                 # rearrange relation with right and left children
                 successor.left_child = node.left_child
@@ -127,3 +129,17 @@ class BinarySearchTree:
         else: # nothing to delete
             print(f"key {key} not found, cannot be deleted")
             pass
+
+    def __iter__(self):
+        keys = []
+        stack = []
+        current = self.root
+        while stack or current:
+            if current:
+                stack.append(current)
+                current = current.left_child
+            else:
+                current = stack.pop()
+                keys.append(current.key)
+                current = current.right_child
+        return iter(keys)

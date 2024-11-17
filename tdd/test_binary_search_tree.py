@@ -105,7 +105,19 @@ class TestBinarySearchTree(unittest.TestCase):
         self.assertEqual(bst.get_node(10).left_child, bst.get_node(6))
         self.assertEqual(bst.get_node(3).parent, bst.get_node(6))
         self.assertEqual(bst.get_node(6).parent, bst.get_node(10))
+        bst = BinarySearchTree()
+        bst.put(10, "value10")
+        bst.put(5, "value5")
+        bst.put(12, "value12")
+        bst.delete(10)
+        self.assertEqual(bst.root.key,  12)
 
+    def test_in_order_traversal(self):
+        bst = BinarySearchTree()
+        for key in [10, 5, 13, 4, 2]:
+            bst.put(key, f"value{key}")
+        traversal = [key for key in bst]
+        self.assertEqual(traversal, [2,4,5,10,13])
 
 if __name__ == '__main__':
     unittest.main()
